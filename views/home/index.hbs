@@ -1,1 +1,78 @@
-<h1>Tu będą pyszne ciasteczka :)</h1>
+<div class="center-container">
+    {{> cookie-preview}}
+    <div class="right-box">
+        <h1 class="main-text">Configure your cookie 👨‍🍳</h1>
+
+                    <div class="fixed-width-card">
+                        <table class="fixed-width-table">
+                            <!--- BASE ---->
+                            <thead>
+                            <tr>
+                                <th class="fixed-width-column">Base</th>
+                                <th>Price</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#each bases}}
+                            <tr>
+                                <td class="fixed-width-column"><i class='bx bxs-circle'></i> {{this.[0]}}</td>
+                                <td>{{this.[1]}} $</td>
+                                <td>
+                                    <span class="material-icons">
+                                        <a href="/configurator/add-base/{{this.[0]}}" title="{{this.[0]}}">+</a>
+                                    </span>
+                                </td>
+                            </tr>
+                            {{/each}}
+                            </tbody>
+                            <!--- GLAZE ---->
+                            <thead>
+                            <tr>
+                                <th class="fixed-width-column">Glaze</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#each glazes}}
+                                <tr>
+                                    <td class="fixed-width-column"><i class='bx bxs-circle'></i> {{this.[0]}}</td>
+                                    <td>{{this.[1]}} $</td>
+                                    <td>
+                                        <span class="material-icons">
+                                            <a href="/configurator/add-glaze/{{this.[0]}}" title="{{this.[0]}}">+</a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            {{/each}}
+                            </tbody>
+                            <!--- ADDONS ---->
+                            <thead>
+                            <tr>
+                                <th class="fixed-width-column">Addons</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#each addons}}
+                                <tr>
+                                    <td class="fixed-width-column"><i class='bx bxs-circle'></i> {{this.[0]}}</td>
+                                    <td>{{this.[1]}} $</td>
+                                    <td>
+                                        <span class="material-icons">
+                                            <a href="/configurator/add-addons/{{this.[0]}}" title="{{this.[0]}}">+</a>
+                                        </span>
+                                    </td>
+                                </tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+
+    </div>
+
+</div>
+
+

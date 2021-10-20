@@ -6,6 +6,9 @@
     --font: #3d3d4e;
     --avatar-bg: #f8adbe;
     --basket: #eb002b;
+
+    --primary-color: #77223c;
+    --secondary-color: #ef6a20;
 }
 
 body {
@@ -58,6 +61,7 @@ body {
     border: 0px solid transparent;
     text-shadow: 0px 0px 0px transparent;
     margin-right: 2rem;
+    color: var(--font);
 }
 
 /*-- FOOTER --*/
@@ -93,6 +97,14 @@ body {
     cursor: pointer;
 }
 
+.link_github {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .bxl-github {
     font-size: 1.5rem;
     cursor: pointer;
@@ -116,4 +128,95 @@ body {
 
 .center-section {
     padding: 0 4rem;
+}
+
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cookie-preview {
+    width: 250px;
+    height: 250px;
+    background-size: cover;
+    margin-right: 5rem;
+}
+
+.right-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/*NOWE*/
+
+.block.fixed-widths {
+    /*background: #5e2aab;*/
+}
+
+.fixed-width-card {
+    padding: 1rem;
+    margin: 0 0.5rem;
+    line-height: 1;
+    border-radius: 0.75rem;
+    background: #ffffff;
+    /*color: #45424d;*/
+}
+
+.fixed-width-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.fixed-width-table .material-icons {
+    color: var(--secondary-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.fixed-width-table th {
+    font-weight: 400;
+    font-size: 0.875rem;
+    color: var(--secondary-color);
+    height: 1.75rem;
+}
+
+.fixed-width-table td {
+    height: 2rem;
+}
+
+.fixed-width-table td:last-child {
+    text-align: right;
+}
+
+.fixed-width-table--middle td {
+    fixed-width: top;
+}
+
+.fixed-width-column {
+    width: 12rem;
+    min-width: 12rem;
+    max-width: 12rem;
+    text-align: left;
+    display: flex;
+    align-items: center;
+}
+
+a {
+    text-decoration: none;
+    color: var(--secondary-color);
+}
+
+.main-text {
+    background: var(--avatar-bg);
+    padding: .5rem 1rem;
+    border-radius: .6rem;
+    color: var(--primary-color);
+}
+
+.bxs-circle {
+    font-size: .4rem;
+    margin-right:  .5rem;
 }
