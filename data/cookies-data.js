@@ -1,6 +1,6 @@
 const COOKIE_BASES = {
-    light: 3,
-    dark: 3,
+    butter: 3,
+    chocolate: 3,
 };
 
 const COOKIE_GLAZE = {
@@ -15,7 +15,6 @@ const COOKIE_ADDONS = {
     kiwi: 2,
     orange: 2,
     strawberries: 2,
-    watermelon: 2,
 }
 
 module.exports = {

@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-@import "/normalize.css";
+@import "/assets/styles/normalize.css";
 
 :root {
     --background: #fcf0ff;
@@ -53,6 +53,7 @@ body {
 .bx-basket {
     font-size: 1.5rem;
     cursor: pointer;
+    position: relative;
 }
 
 .basket {
@@ -112,16 +113,9 @@ body {
 
 .bg-asset1 {
     position: absolute;
-    bottom: 15%;
+    bottom: 10%;
     right: 1%;
-    height: 12rem;
-}
-
-.bg-asset2 {
-    position: absolute;
-    top: 15%;
-    left: 1%;
-    height: 12rem;
+    height: 10rem;
 }
 
 /*-- CENTER --*/
@@ -141,6 +135,15 @@ body {
     height: 250px;
     background-size: cover;
     margin-right: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-style: dashed;
+    border-width: .1rem;
+    border-radius: .5rem;
+    border-color: var(--avatar-bg);
+    font-size: 1.2rem;
+    color: var(--primary-color)
 }
 
 .right-box {
@@ -151,17 +154,12 @@ body {
 
 /*NOWE*/
 
-.block.fixed-widths {
-    /*background: #5e2aab;*/
-}
-
 .fixed-width-card {
     padding: 1rem;
     margin: 0 0.5rem;
     line-height: 1;
     border-radius: 0.75rem;
     background: #ffffff;
-    /*color: #45424d;*/
 }
 
 .fixed-width-table {
@@ -170,10 +168,8 @@ body {
     background: white;
 }
 
-.fixed-width-table .material-icons {
-    color: var(--secondary-color);
+.fixed-width-table .add-icon{
     font-size: 1.5rem;
-    cursor: pointer;
 }
 
 .fixed-width-table th {
@@ -191,10 +187,6 @@ body {
     text-align: right;
 }
 
-.fixed-width-table--middle td {
-    fixed-width: top;
-}
-
 .fixed-width-column {
     width: 12rem;
     min-width: 12rem;
@@ -206,7 +198,6 @@ body {
 
 a {
     text-decoration: none;
-    color: var(--secondary-color);
 }
 
 .main-text {
@@ -214,9 +205,95 @@ a {
     padding: .5rem 1rem;
     border-radius: .6rem;
     color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-weight: bold;
 }
 
 .bxs-circle {
     font-size: .4rem;
     margin-right:  .5rem;
+}
+
+.add-icon {
+    color: var(--secondary-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.remove-icon {
+    color: lightgray;
+    font-size: 1.5rem;
+    cursor: not-allowed;
+}
+
+/*.remove-icon-link {*/
+/*    color: lightgray;*/
+/*    font-size: 1.5rem;*/
+/*    cursor: not-allowed;*/
+/*}*/
+
+/*.add-icon-link {*/
+/*    color: var(--secondary-color);*/
+/*    font-size: 1.5rem;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*PULSE */
+
+/*.block.pulse {*/
+/*    background: #222227;*/
+/*}*/
+
+.pulse1-badge {
+    position: absolute;
+    width: .6rem;
+    height: .6rem;
+    top:-.4rem;
+    right:-.4rem;
+    display: none;
+}
+
+.pulse1-badge::before,
+.pulse1-badge::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.pulse1-badge::before {
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background: var(--avatar-bg);
+}
+
+@keyframes pulse1 {
+    0% {
+        opacity: 0.5;
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(2.5);
+    }
+}
+
+.pulse1-badge::after {
+    z-index: 0;
+    top: -4px;
+    left: -4px;
+    border: 4px solid var(--avatar-bg);
+    transform: scale(0.5);
+    animation: pulse1 2s infinite;
+}
+
+.glaze-add {
+    cursor: not-allowed;
+}
+
+.addon-add {
+    cursor: not-allowed;
 }
