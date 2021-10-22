@@ -11,9 +11,9 @@ const COOKIE_GLAZE = {
 const COOKIE_ADDONS = {
     sprinkles: 1,
     nuts: 1.5,
-    cherry: 2,
+    cherries: 2,
     kiwi: 2,
-    orange: 2,
+    oranges: 2,
     strawberries: 2,
 }
 

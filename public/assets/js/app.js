@@ -1,35 +1,105 @@
 const addBaseElements = document.querySelectorAll('.base-add');
-
 const addGlazeElements = document.querySelectorAll('.glaze-add');
-
 const addAddonsElements = document.querySelectorAll('.addon-add');
 const removeAddonsElements = document.querySelectorAll('.addon-remove');
 
 const pulseBadge = document.querySelector('.pulse1-badge');
-
+const baseCookiePreviewDiv = document.querySelector('.base-cookie-preview');
 const cookiePreviewDiv = document.querySelector('.cookie-preview');
+const body = document.querySelector('body');
 
+const basketIcon = document.querySelector('.bx-basket');
 
-// Functions
+async function init() {
+    const res = await fetch('/get-cookie');
+    const data = await res.json();
 
-function configureCookie() {
-    const cookie = {
-        base: '',
-        glaze: '',
-        addons: [],
-    };
+    let cookie = {};
+    let savedCookie;
 
-        // add base
-    [...addBaseElements].forEach(el => {
-        el.addEventListener('click', e => {
-            cookie.base = e.target.dataset.name;
+    basketIcon.addEventListener('click', async () => {
+        const r = {sir: 'dsdad'}
+        await fetch('order/basket', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(cookie),
+        })
+    })
 
+    // COOKIE NOT SAVED
+    if (data.base !== null) {
+        cookie = {...data};
+        savedCookie = true;
+
+        // BASE
+        [...addBaseElements].forEach(el => {
             pulseBadge.style.display = 'flex';
 
-            cookiePreview(cookie);
+            if (el.dataset.name === cookie.base){
+                    el.style.color = 'var(--secondary-color)';
+                } else {
+                    el.style.color = 'lightgray';
+            }
+            addBase(cookie, el, savedCookie)
+        });
 
-            // add Glaze
-            addGlaze(cookie);
+        //GLAZE
+        addGlaze(cookie, savedCookie);
+        [...addGlazeElements].forEach(el => {
+            el.style.cursor = "pointer";
+
+            if (el.dataset.name === cookie.glaze){
+                el.style.color = 'var(--secondary-color)';
+            } else {
+                el.style.color = 'lightgray';
+            }
+        });
+
+        // ADD ADDONS
+        addAddons(cookie, savedCookie);
+        [...addAddonsElements].forEach(el => {
+            el.style.cursor = "pointer";
+            if (cookie.addons.includes(el.dataset.name)){
+                el.style.color = 'var(--secondary-color)';
+            } else {
+                el.style.color = 'lightgray';
+            }
+        });
+
+        // REMOVE ADDONS
+        [...removeAddonsElements].forEach(el => {
+            if (cookie.addons.includes(el.dataset.name)){
+                el.style.color = 'var(--primary-color)';
+                el.style.cursor = "pointer";
+            } else {
+                el.style.color = 'lightgray';
+            }
+        });
+
+    // COOKIE SAVED
+    } else {
+        cookie = {
+            base: '',
+            glaze: '',
+            addons: [],
+        };
+
+        [...addBaseElements].forEach(el => {
+            addBase(cookie, el, savedCookie)
+        });
+    }
+}
+
+function addBase(cookies, element, savedCookie) {
+        element.addEventListener('click', e => {
+            cookies.base = e.target.dataset.name;
+            if (!savedCookie){
+                pulseBadge.style.display = 'flex';
+                addGlaze(cookies, savedCookie);
+            }
+            cookiePreview(cookies, savedCookie);
 
             [...addBaseElements].forEach(ele => {
                 if (e.target === ele){
@@ -39,79 +109,87 @@ function configureCookie() {
                 }
             })
         })
-    })
 }
 
-function addGlaze(cookie) {
-    [...addGlazeElements].forEach(el => {
-        el.style.cursor = "pointer";
-
-        el.addEventListener('click', e => {
-            cookie.glaze = e.target.dataset.name;
-
-            cookiePreview(cookie);
-
-            //Add addons
-            addAddons(cookie);
-
-            [...addGlazeElements].forEach(ele => {
-                if (e.target === ele){
-                    ele.style.color = 'var(--secondary-color)';
-                } else {
-                    ele.style.color = 'lightgray';
-                }
-            })
-        });
-    })
+function addGlaze(cookie, savedCookie) {
+    if (savedCookie) {
+        [...addGlazeElements].forEach(el => {
+            addGlazeItem(el, cookie, savedCookie);
+        })
+    } else {
+        [...addGlazeElements].forEach(el => {
+            el.style.cursor = "pointer";
+            addGlazeItem(el, cookie, savedCookie);
+        })
+    }
 }
 
-function addAddons(cookie) {
-    [...addAddonsElements].forEach(el => {
-        el.style.cursor = "pointer";
+function addGlazeItem(el, cookie, savedCookie) {
+    el.addEventListener('click', e => {
+        cookie.glaze = e.target.dataset.name;
 
-        el.addEventListener('click', e => {
+        cookiePreview(cookie, savedCookie);
 
-            if (cookie.addons.length === 2) {
-                console.log('bag');
+        if (!savedCookie) {
+            addAddons(cookie, savedCookie);
+        }
+
+        [...addGlazeElements].forEach(ele => {
+            if (e.target === ele){
+                ele.style.color = 'var(--secondary-color)';
+            } else {
+                ele.style.color = 'lightgray';
+            }
+        })
+    });
+}
+
+function addAddons(cookie, savedCookie) {
+        [...addAddonsElements].forEach(el => {
+
+            if (!savedCookie) {
+                el.style.cursor = 'pointer';
             }
 
-            if (!cookie.addons.includes(e.target.dataset.name) && cookie.addons.length <= 1) {
-                cookie.addons.push(e.target.dataset.name);
-
-                cookiePreview(cookie);
-
-                removeAddons(cookie, e.target.dataset.name);
-            }
-
-            [...addAddonsElements].forEach(ele => {
-                if (cookie.addons.includes(ele.dataset.name)){
-                    ele.style.color = 'var(--secondary-color)';
-                } else {
-                    ele.style.color = 'lightgray';
-                }
+            el.addEventListener('click', e => {
 
                 if (cookie.addons.length === 2) {
-                    if (cookie.addons.indexOf(ele.dataset.name) === -1) {
-                        ele.style.cursor = 'not-allowed';
-                    } else {
-                        ele.style.cursor = 'pointer';
-                    }
+                    alertMessage('📣 You have already added 2 addons')
                 }
-            })
 
-        });
-    })
+                if (!cookie.addons.includes(e.target.dataset.name) && cookie.addons.length <= 1) {
+                    cookie.addons.push(e.target.dataset.name);
+
+                    cookiePreview(cookie, savedCookie);
+                    removeAddons(cookie, e.target.dataset.name, savedCookie);
+                }
+
+                [...addAddonsElements].forEach(ele => {
+                    if (cookie.addons.includes(ele.dataset.name)){
+                        ele.style.color = 'var(--secondary-color)';
+                    } else {
+                        ele.style.color = 'lightgray';
+                    }
+
+                    if (cookie.addons.length === 2) {
+                        if (cookie.addons.indexOf(ele.dataset.name) === -1) {
+                            ele.style.cursor = 'not-allowed';
+                        } else {
+                            ele.style.cursor = 'pointer';
+                        }
+                    }
+                })
+            });
+        })
 }
 
-function removeAddons(cookie, nameAddon) {
-
+function removeAddons(cookie, nameAddon, savedCookie) {
     [...removeAddonsElements].forEach((el, i) => {
         if (el.dataset.name === nameAddon) {
             el.style.color = 'var(--primary-color)';
             el.style.cursor = 'pointer';
         }
-
-        el.addEventListener('click', e => {
+        el.addEventListener('click', () => {
             el.style.color = 'lightgrey';
             el.style.cursor = 'not-allowed';
 
@@ -135,19 +213,14 @@ function removeAddons(cookie, nameAddon) {
                     }
                 })
 
-            cookiePreview(cookie);
+            cookiePreview(cookie, savedCookie);
         })
-
     })
-
 }
 
-function cookiePreview(obj) {
+function cookiePreview(obj, savedCookie) {
     const {base, glaze, addons} = obj;
     const bg = [];
-
-    cookiePreviewDiv.innerText = '';
-    cookiePreviewDiv.style.border = 'none';
 
     if (glaze) {
         bg.push(`url('/assets/images/cookies/${glaze}.png')`)
@@ -163,10 +236,35 @@ function cookiePreview(obj) {
         })
     }
 
-    cookiePreviewDiv.style.backgroundImage = bg.join(',');
-
+    if (!savedCookie) {
+        baseCookiePreviewDiv.style.backgroundImage = bg.join(',');
+        baseCookiePreviewDiv.innerText = '';
+        baseCookiePreviewDiv.style.border = 'none';
+    } else {
+        cookiePreviewDiv.style.backgroundImage = bg.join(',');
+    }
 }
 
-configureCookie();
+function alertMessage(string) {
+    const div = document.createElement('div');
+    div.classList.add('alert');
+
+    const p = document.createElement('p');
+    p.classList.add('alert-text', 'animate__animated', 'animate__fadeInDown')
+    p.innerText = string;
+
+    div.appendChild(p);
+    body.appendChild(div);
+
+    setTimeout(() => {
+        p.classList.add('animate__fadeOutUp');
+    }, 2000)
+
+    setTimeout(() => {
+        body.removeChild(div);
+    }, 3000)
+}
+
+init();
 
 

@@ -1,0 +1,64 @@
+<h1 class="main-text">Configure your cookie 👨‍🍳</h1>
+
+<div class="fixed-width-card">
+    <table class="fixed-width-table">
+        <!--- BASE ---->
+        <thead>
+        <tr>
+            <th class="fixed-width-column">1. Base</th>
+            <th>Price</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each bases}}
+            <tr>
+                <td class="fixed-width-column"><i class='bx bxs-circle'></i> {{this.[0]}}</td>
+                <td>{{this.[1]}} $</td>
+                <td>
+                    <span class="add-icon base-add" data-name="{{this.[0]}}" data-sector="base" title="Add {{this.[0]}} base">+</span>
+                </td>
+            </tr>
+        {{/each}}
+        </tbody>
+        <!--- GLAZE ---->
+        <thead>
+        <tr>
+            <th class="fixed-width-column">2. Glaze</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each glazes}}
+            <tr>
+                <td class="fixed-width-column"><i class='bx bxs-circle'></i> {{this.[0]}}</td>
+                <td>{{this.[1]}} $</td>
+                <td>
+                    <span class="add-icon glaze-add" data-name="{{this.[0]}}" data-sector="glaze" title="Add {{this.[0]}}">+</span>
+                </td>
+            </tr>
+        {{/each}}
+        </tbody>
+        <!--- ADDONS ---->
+        <thead>
+        <tr>
+            <th class="fixed-width-column">3. Addons</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each addons}}
+            <tr>
+                <td class="fixed-width-column"><i class='bx bxs-circle'></i> {{this.[0]}}</td>
+                <td>{{this.[1]}} $</td>
+                <td>
+                    <span class="add-icon addon-add" data-name="{{this.[0]}}" data-sector="addon" title="Add {{this.[0]}}">+</span>
+                    <span class="remove-icon addon-remove" data-name="{{this.[0]}}" data-sector="addon" title="Remove {{this.[0]}}">-</span>
+                </td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</div>

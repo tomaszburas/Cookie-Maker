@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-@import "/assets/styles/normalize.css";
+@import url('./normalize.css');
 
 :root {
     --background: #fcf0ff;
@@ -135,6 +135,13 @@ body {
     height: 250px;
     background-size: cover;
     margin-right: 5rem;
+}
+
+.base-cookie-preview {
+    width: 250px;
+    height: 250px;
+    background-size: cover;
+    margin-right: 5rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -198,6 +205,10 @@ body {
 
 a {
     text-decoration: none;
+}
+
+a:active {
+    color: var(--font);
 }
 
 .main-text {
@@ -296,4 +307,18 @@ a {
 
 .addon-add {
     cursor: not-allowed;
+}
+
+.alert {
+    position: absolute;
+    top: 3%;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.alert-text {
+    padding: 1rem;
+    background-color: var(--avatar-bg);
+    border-radius: .6rem;
 }

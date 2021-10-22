@@ -5,11 +5,24 @@ const homeRouter = express.Router();
 
 homeRouter
     .get('/', (req, res) => {
+        const {cookieData} = req.cookies;
+
         res.render('home/index', {
+            cookieData,
             bases: Object.entries(COOKIE_BASES),
             glazes: Object.entries(COOKIE_GLAZE),
             addons: Object.entries(COOKIE_ADDONS)
         });
+    })
+
+    .get('/get-cookie', (req, res) => {
+        const {cookieData} = req.cookies;
+
+        if (cookieData) {
+            res.json(cookieData)
+        } else {
+            res.json({base: null})
+        }
     })
 
 module.exports = {
