@@ -18,12 +18,13 @@ async function init() {
     let savedCookie;
 
     basketIcon.addEventListener('click', async () => {
-        const r = {sir: 'dsdad'}
-        await fetch('order/basket', {
+
+        await fetch('order/basket/set-cookie', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include',
             body: JSON.stringify(cookie),
         })
     })
@@ -70,6 +71,7 @@ async function init() {
 
         // REMOVE ADDONS
         [...removeAddonsElements].forEach(el => {
+            removeAddons(cookie, el.dataset.name, savedCookie);
             if (cookie.addons.includes(el.dataset.name)){
                 el.style.color = 'var(--primary-color)';
                 el.style.cursor = "pointer";

@@ -134,7 +134,8 @@ body {
     width: 250px;
     height: 250px;
     background-size: cover;
-    margin-right: 5rem;
+    /*margin-right: 5rem;*/
+    background-position: center;
 }
 
 .base-cookie-preview {
@@ -157,6 +158,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-left: 5rem;
 }
 
 /*NOWE*/
@@ -205,6 +207,7 @@ body {
 
 a {
     text-decoration: none;
+    color: var(--font)
 }
 
 a:active {
@@ -321,4 +324,59 @@ a:active {
     padding: 1rem;
     background-color: var(--avatar-bg);
     border-radius: .6rem;
+}
+
+.big-txt {
+    font-size: 1.2rem;
+    margin-bottom: 3rem;
+}
+
+/*button*/
+
+.center-button {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    color: var(--primary-color);
+    background: var(--avatar-bg);
+    border: 0;
+    cursor: pointer;
+}
+
+.center-button-icon {
+    font-size: 1rem;
+    background-color: var(--background);
+    padding: .3rem;
+    border-radius: 0.5rem;
+}
+
+.center-button-text {
+    font-size: 1rem;
+}
+
+.basket-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.summary-center-container {
+    display: flex;
+    justify-content: center;
+}
+
+.summary-box-left {
+    margin-right: 5rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.summary-box-right {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }

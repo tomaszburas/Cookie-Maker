@@ -1,3 +1,17 @@
-<div class="center-container">
+<div class="summary-center-container">
+    {{#if cookieData.base}}
+        <div class="summary-box-left">
+            <h1 class="big-txt">Summary</h1>
+        </div>
+        <div class="summary-box-right">
+            <h1 class="big-txt">Preview cookie</h1>
+            {{> cookie-preview}}
+        </div>
+    {{else}}
+        <div class="basket-box">
+            <h1 class="big-txt">Your shopping cart is empty 🙁</h1>
+            {{> go-home}}
+        </div>
 
+    {{/if}}
 </div>

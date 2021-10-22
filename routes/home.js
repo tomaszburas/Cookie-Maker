@@ -5,7 +5,7 @@ const homeRouter = express.Router();
 
 homeRouter
     .get('/', (req, res) => {
-        const {cookieData} = req.cookies;
+        const cookieData = req.cookies['Cookie-Maker'];
 
         res.render('home/index', {
             cookieData,
@@ -16,7 +16,7 @@ homeRouter
     })
 
     .get('/get-cookie', (req, res) => {
-        const {cookieData} = req.cookies;
+        const cookieData = req.cookies['Cookie-Maker'];
 
         if (cookieData) {
             res.json(cookieData)
