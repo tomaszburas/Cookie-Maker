@@ -1,272 +1,317 @@
-const addBaseElements = document.querySelectorAll('.base-add');
-const addGlazeElements = document.querySelectorAll('.glaze-add');
-const addAddonsElements = document.querySelectorAll('.addon-add');
-const removeAddonsElements = document.querySelectorAll('.addon-remove');
+(async function () {
+    const addBaseElements = document.querySelectorAll('.base-add');
+    const addGlazeElements = document.querySelectorAll('.glaze-add');
+    const removeGlazeElements = document.querySelectorAll('.glaze-remove')
+    const addAddonsElements = document.querySelectorAll('.addon-add');
+    const removeAddonsElements = document.querySelectorAll('.addon-remove');
 
-const pulseBadge = document.querySelector('.pulse1-badge');
-const baseCookiePreviewDiv = document.querySelector('.base-cookie-preview');
-const cookiePreviewDiv = document.querySelector('.cookie-preview');
-const body = document.querySelector('body');
+    const pulseBadge = document.querySelector('.pulse1-badge');
+    const baseCookiePreviewDiv = document.querySelector('.base-cookie-preview');
+    const cookiePreviewDiv = document.querySelector('.cookie-preview');
+    const body = document.querySelector('body');
 
-const basketIcon = document.querySelector('.bx-basket');
-
-async function init() {
-    const res = await fetch('/get-cookie');
-    const data = await res.json();
+    const basketIcon = document.querySelector('.bx-basket');
 
     let cookie = {};
     let savedCookie;
 
-    basketIcon.addEventListener('click', async () => {
-        await fetch('order/basket/set-cookie', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(cookie),
+    async function init() {
+        const res = await fetch('/get-cookie');
+        const data = await res.json();
+
+        basketIcon.addEventListener('click', async () => {
+            await fetch('order/basket/set-cookie', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(cookie),
+            })
+
+            window.location.href = '/order/basket'
         })
 
-        window.location.href = '/order/basket'
-    })
+        // COOKIE SAVED
+        if (data.base !== null) {
+            cookie = {...data};
+            savedCookie = true;
 
-    // COOKIE NOT SAVED
-    if (data.base !== null) {
-        cookie = {...data};
-        savedCookie = true;
+            // BASE
+            [...addBaseElements].forEach(el => {
+                pulseBadge.style.display = 'flex';
 
-        // BASE
-        [...addBaseElements].forEach(el => {
-            pulseBadge.style.display = 'flex';
-
-            if (el.dataset.name === cookie.base){
+                if (el.dataset.name === cookie.base){
                     el.style.color = 'var(--secondary-color)';
                 } else {
                     el.style.color = 'lightgray';
-            }
-            addBase(cookie, el, savedCookie)
-        });
+                }
+                addBase(el)
+            });
 
-        //GLAZE
-        addGlaze(cookie, savedCookie);
-        [...addGlazeElements].forEach(el => {
-            el.style.cursor = "pointer";
-
-            if (el.dataset.name === cookie.glaze){
-                el.style.color = 'var(--secondary-color)';
-            } else {
-                el.style.color = 'lightgray';
-            }
-        });
-
-        // ADD ADDONS
-        addAddons(cookie, savedCookie);
-        [...addAddonsElements].forEach(el => {
-            el.style.cursor = "pointer";
-            if (cookie.addons.includes(el.dataset.name)){
-                el.style.color = 'var(--secondary-color)';
-            } else {
-                el.style.color = 'lightgray';
-            }
-        });
-
-        // REMOVE ADDONS
-        [...removeAddonsElements].forEach(el => {
-            removeAddons(cookie, el.dataset.name, savedCookie);
-            if (cookie.addons.includes(el.dataset.name)){
-                el.style.color = 'var(--primary-color)';
+            //ADD GLAZE
+            addGlaze(cookie, savedCookie);
+            [...addGlazeElements].forEach(el => {
                 el.style.cursor = "pointer";
-            } else {
-                el.style.color = 'lightgray';
-            }
-        });
 
-    // COOKIE SAVED
-    } else {
-        cookie = {
-            base: '',
-            glaze: '',
-            addons: [],
-        };
-
-        [...addBaseElements].forEach(el => {
-            addBase(cookie, el, savedCookie)
-        });
-    }
-}
-
-function addBase(cookies, element, savedCookie) {
-        element.addEventListener('click', e => {
-            cookies.base = e.target.dataset.name;
-            if (!savedCookie){
-                pulseBadge.style.display = 'flex';
-                addGlaze(cookies, savedCookie);
-            }
-            cookiePreview(cookies, savedCookie);
-
-            [...addBaseElements].forEach(ele => {
-                if (e.target === ele){
-                    ele.style.color = 'var(--secondary-color)';
+                if (el.dataset.name === cookie.glaze){
+                    el.style.color = 'var(--secondary-color)';
                 } else {
-                    ele.style.color = 'lightgray';
+                    el.style.color = 'lightgray';
+                }
+            });
+
+            //REMOVE GLAZE
+            removeGlaze(cookie.glaze);
+            [...removeGlazeElements].forEach((el) => {
+                if (el.dataset.name === cookie.glaze) {
+                    el.style.color = 'var(--primary-color)';
+                    el.style.cursor = 'pointer';
+                } else {
+                    el.style.color = 'lightgray';
+                    el.style.cursor = 'not-allowed';
                 }
             })
-        })
-}
 
-function addGlaze(cookie, savedCookie) {
-    if (savedCookie) {
-        [...addGlazeElements].forEach(el => {
-            addGlazeItem(el, cookie, savedCookie);
-        })
-    } else {
-        [...addGlazeElements].forEach(el => {
-            el.style.cursor = "pointer";
-            addGlazeItem(el, cookie, savedCookie);
-        })
-    }
-}
+            // ADD ADDONS
+            addAddons();
+            [...addAddonsElements].forEach(el => {
+                el.style.cursor = "pointer";
+                if (cookie.addons.includes(el.dataset.name)){
+                    el.style.color = 'var(--secondary-color)';
+                } else {
+                    el.style.color = 'lightgray';
+                }
+            });
 
-function addGlazeItem(el, cookie, savedCookie) {
-    el.addEventListener('click', e => {
-        cookie.glaze = e.target.dataset.name;
+            // REMOVE ADDONS
+            [...removeAddonsElements].forEach(el => {
+                removeAddons(el.dataset.name);
+                if (cookie.addons.includes(el.dataset.name)){
+                    el.style.color = 'var(--primary-color)';
+                    el.style.cursor = "pointer";
+                } else {
+                    el.style.color = 'lightgray';
+                    el.style.cursor = "not-allowed";
+                }
+            });
 
-        cookiePreview(cookie, savedCookie);
 
-        if (!savedCookie) {
-            addAddons(cookie, savedCookie);
+            // COOKIE NOT SAVED
+        } else {
+            cookie = {
+                base: '',
+                glaze: '',
+                addons: [],
+            };
+
+            [...addBaseElements].forEach(el => {
+                addBase(el)
+            });
         }
+    }
 
-        [...addGlazeElements].forEach(ele => {
+    function addBase(element) {
+        element.addEventListener('click', addBaseItem);
+    }
+
+    function addBaseItem(e) {
+        cookie.base = e.target.dataset.name;
+        if (!savedCookie){
+            pulseBadge.style.display = 'flex';
+            addGlaze();
+        }
+        cookiePreview(cookie);
+
+        [...addBaseElements].forEach(ele => {
             if (e.target === ele){
                 ele.style.color = 'var(--secondary-color)';
             } else {
                 ele.style.color = 'lightgray';
             }
-        })
-    });
-}
+        });
+    }
 
-function addAddons(cookie, savedCookie) {
+    function addGlaze() {
+        if (savedCookie) {
+            [...addGlazeElements].forEach(el => {
+                el.addEventListener('click', addGlazeItem);
+            })
+        } else {
+            addAddons();
+            [...addGlazeElements].forEach(el => {
+                el.style.cursor = "pointer";
+                el.addEventListener('click', addGlazeItem);
+            })
+        }
+    }
+
+    function addGlazeItem(e) {
+        cookie.glaze = e.target.dataset.name;
+
+        cookiePreview(cookie);
+
+        [...addGlazeElements].forEach(ele => {
+            if (e.target === ele){
+                ele.style.color = 'var(--secondary-color)';
+                removeGlaze(e.target.dataset.name);
+            } else {
+                ele.style.color = 'lightgray';
+            }
+        })
+    }
+
+    function removeGlaze(nameAddon) {
+        [...removeGlazeElements].forEach((el) => {
+            if (el.dataset.name === nameAddon) {
+                el.style.color = 'var(--primary-color)';
+                el.style.cursor = 'pointer';
+            } else {
+                el.style.color = 'lightgray';
+                el.style.cursor = 'not-allowed';
+            }
+            el.addEventListener('click', removeGlazeItem)
+        })
+    }
+
+    function removeGlazeItem(e) {
+        e.target.style.color = 'lightgrey';
+        e.target.style.cursor = 'not-allowed';
+
+        const addElement = [...addGlazeElements].find(el => el.dataset.name === e.target.dataset.name)
+
+        addElement.style.color = 'lightgrey'
+
+        cookie.glaze = '';
+    }
+
+    function addAddons() {
         [...addAddonsElements].forEach(el => {
 
             if (!savedCookie) {
                 el.style.cursor = 'pointer';
             }
 
-            el.addEventListener('click', e => {
-
-                if (cookie.addons.length === 2) {
-                    alertMessage('📣 You have already added 2 addons')
-                }
-
-                if (!cookie.addons.includes(e.target.dataset.name) && cookie.addons.length <= 1) {
-                    cookie.addons.push(e.target.dataset.name);
-
-                    cookiePreview(cookie, savedCookie);
-                    removeAddons(cookie, e.target.dataset.name, savedCookie);
-                }
-
-                [...addAddonsElements].forEach(ele => {
-                    if (cookie.addons.includes(ele.dataset.name)){
-                        ele.style.color = 'var(--secondary-color)';
-                    } else {
-                        ele.style.color = 'lightgray';
-                    }
-
-                    if (cookie.addons.length === 2) {
-                        if (cookie.addons.indexOf(ele.dataset.name) === -1) {
-                            ele.style.cursor = 'not-allowed';
-                        } else {
-                            ele.style.cursor = 'pointer';
-                        }
-                    }
-                })
-            });
+            el.addEventListener('click', addAddonsItem)
         })
-}
+    }
 
-function removeAddons(cookie, nameAddon, savedCookie) {
-    [...removeAddonsElements].forEach((el, i) => {
-        if (el.dataset.name === nameAddon) {
-            el.style.color = 'var(--primary-color)';
-            el.style.cursor = 'pointer';
+    function addAddonsItem(e) {
+
+        if (!cookie.addons.includes(e.target.dataset.name) && cookie.addons.length <= 1) {
+            cookie.addons.push(e.target.dataset.name);
+
+            cookiePreview(cookie);
+            removeAddons(e.target.dataset.name);
+        } else {
+            alertMessage('📣 You have already added 2 addons')
         }
-        el.addEventListener('click', () => {
-            el.style.color = 'lightgrey';
-            el.style.cursor = 'not-allowed';
 
-            [...addAddonsElements][i].style.color = 'lightgrey';
-
-            const index = cookie.addons.indexOf(el.dataset.name);
-
-            if (index !== -1) {
-                cookie.addons.splice(index, 1);
+        [...addAddonsElements].forEach(ele => {
+            if (cookie.addons.includes(ele.dataset.name)){
+                ele.style.color = 'var(--secondary-color)';
+            } else {
+                ele.style.color = 'lightgray';
             }
 
-                [...addAddonsElements].forEach(ele => {
-                    if (cookie.addons.length === 2) {
-                        if (cookie.addons.indexOf(ele.dataset.name) === -1) {
-                            ele.style.cursor = 'not-allowed';
-                        } else {
-                            ele.style.cursor = 'pointer';
-                        }
-                    } else {
-                        ele.style.cursor = 'pointer';
-                    }
-                })
-
-            cookiePreview(cookie, savedCookie);
-        })
-    })
-}
-
-function cookiePreview(obj, savedCookie) {
-    const {base, glaze, addons} = obj;
-    const bg = [];
-
-    if (glaze) {
-        bg.push(`url('/assets/images/cookies/${glaze}.png')`)
-    }
-
-    if (base) {
-        bg.push(`url('/assets/images/cookies/empty-${base}.png')`)
-    }
-
-    if (addons) {
-        addons.forEach(e => {
-            bg.unshift(`url('/assets/images/cookies/${e}.png')`)
+            if (cookie.addons.length === 2) {
+                if (cookie.addons.indexOf(ele.dataset.name) === -1) {
+                    ele.style.cursor = 'not-allowed';
+                } else {
+                    ele.style.cursor = 'pointer';
+                }
+            }
         })
     }
 
-    if (!savedCookie) {
-        baseCookiePreviewDiv.style.backgroundImage = bg.join(',');
-        baseCookiePreviewDiv.innerText = '';
-        baseCookiePreviewDiv.style.border = 'none';
-    } else {
-        cookiePreviewDiv.style.backgroundImage = bg.join(',');
+    function removeAddons(nameAddon) {
+        [...removeAddonsElements].forEach((el) => {
+            if (el.dataset.name === nameAddon) {
+                el.style.color = 'var(--primary-color)';
+                el.style.cursor = 'pointer';
+            }
+
+            el.addEventListener('click', removeAddonsItem)
+        })
     }
-}
 
-function alertMessage(string) {
-    const div = document.createElement('div');
-    div.classList.add('alert');
+    function removeAddonsItem(e) {
+        e.target.style.color = 'lightgrey';
+        e.target.style.cursor = 'not-allowed';
 
-    const p = document.createElement('p');
-    p.classList.add('alert-text', 'animate__animated', 'animate__fadeInDown')
-    p.innerText = string;
+        const addElement = [...addAddonsElements].find(el => el.dataset.name === e.target.dataset.name)
 
-    div.appendChild(p);
-    body.appendChild(div);
+        addElement.style.color = 'lightgrey'
 
-    setTimeout(() => {
-        p.classList.add('animate__fadeOutUp');
-    }, 2000)
+        const index = cookie.addons.indexOf(e.target.dataset.name);
 
-    setTimeout(() => {
-        body.removeChild(div);
-    }, 3000)
-}
+        if (index !== -1) {
+            cookie.addons.splice(index, 1);
+        }
 
-init();
+        [...addAddonsElements].forEach(ele => {
+            if (cookie.addons.length === 2) {
+                if (cookie.addons.indexOf(ele.dataset.name) === -1) {
+                    ele.style.cursor = 'not-allowed';
+                } else {
+                    ele.style.cursor = 'pointer';
+                }
+            } else {
+                ele.style.cursor = 'pointer';
+            }
+        })
+
+        cookiePreview(cookie);
+    }
+
+    function cookiePreview(obj) {
+        const {base, glaze, addons} = obj;
+        const bg = [];
+
+        if (glaze) {
+            bg.push(`url('/assets/images/cookies/${glaze}.png')`)
+        }
+
+        if (base) {
+            bg.push(`url('/assets/images/cookies/empty-${base}.png')`)
+        }
+
+        if (addons) {
+            addons.forEach(e => {
+                bg.unshift(`url('/assets/images/cookies/${e}.png')`)
+            })
+        }
+
+        if (!savedCookie) {
+            baseCookiePreviewDiv.style.backgroundImage = bg.join(',');
+            baseCookiePreviewDiv.innerText = '';
+            baseCookiePreviewDiv.style.border = 'none';
+        } else {
+            cookiePreviewDiv.style.backgroundImage = bg.join(',');
+        }
+    }
+
+    function alertMessage(string) {
+        const div = document.createElement('div');
+        div.classList.add('alert');
+
+        const p = document.createElement('p');
+        p.classList.add('alert-text', 'animate__animated', 'animate__fadeInDown')
+        p.innerText = string;
+
+        div.appendChild(p);
+        body.appendChild(div);
+
+        setTimeout(() => {
+            p.classList.add('animate__fadeOutUp');
+        }, 2000)
+
+        setTimeout(() => {
+            body.removeChild(div);
+        }, 3000)
+    }
+
+    await init();
+
+})();
 
 
