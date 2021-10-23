@@ -1,0 +1,64 @@
+<div class="fixed-width-card">
+    <table class="fixed-width-table">
+        <!--- BASE ---->
+        <thead>
+        <tr>
+            <th class="fixed-width-column">Base</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td class="fixed-width-column"><i class='bx bxs-circle'></i> {{cookieData.base}}</td>
+                <td>{{findPrice cookieData.base bases}} $</td>
+            </tr>
+
+        </tbody>
+        <!--- GLAZE ---->
+        {{#if cookieData.glaze}}
+        <thead>
+        <tr>
+            <th class="fixed-width-column">Glaze</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="fixed-width-column"><i class='bx bxs-circle'></i> {{cookieData.glaze}}</td>
+                <td>{{findPrice cookieData.glaze glazes}} $</td>
+            </tr>
+        </tbody>
+        {{/if}}
+        <!--- ADDONS ---->
+        {{#if cookieData.addons}}
+        <thead>
+        <tr>
+            <th class="fixed-width-column">Addons</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each cookieData.addons}}
+            <tr>
+                <td class="fixed-width-column"><i class='bx bxs-circle'></i> {{this}}</td>
+                <td>{{findPrice this @root.addons}} $</td>
+            </tr>
+        {{/each}}
+        </tbody>
+        {{/if}}
+        <!--SUMMARY-->
+        <thead>
+        <tr>
+            <th class="fixed-width-column">SUMMARY</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="fixed-width-column">🍪 Total price</td>
+                <td>{{summaryPrice cookieData bases glazes addons}} $</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

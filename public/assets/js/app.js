@@ -18,15 +18,15 @@ async function init() {
     let savedCookie;
 
     basketIcon.addEventListener('click', async () => {
-
         await fetch('order/basket/set-cookie', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            credentials: 'include',
             body: JSON.stringify(cookie),
         })
+
+        window.location.href = '/order/basket'
     })
 
     // COOKIE NOT SAVED

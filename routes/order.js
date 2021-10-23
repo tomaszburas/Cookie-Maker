@@ -1,4 +1,5 @@
 const express = require('express');
+const {COOKIE_BASES, COOKIE_GLAZE, COOKIE_ADDONS} = require("../data/cookies-data");
 
 const orderRouter = express.Router();
 
@@ -8,7 +9,12 @@ orderRouter
 
         res.render('order/summary', {
             cookieData,
+            bases: Object.entries(COOKIE_BASES),
+            glazes: Object.entries(COOKIE_GLAZE),
+            addons: Object.entries(COOKIE_ADDONS)
         })
+
+
     })
 
     .post('/basket/set-cookie', (req, res) => {
@@ -19,6 +25,11 @@ orderRouter
         }
 
         res.end();
+    })
+
+    .get('/thanks', (req, res) => {
+        res.clearCookie('Cookie-Maker');
+        res.render('order/thanks');
     })
 
 module.exports = {
