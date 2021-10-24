@@ -385,6 +385,12 @@ a:active {
     justify-content: center;
 }
 
+.order-center-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .summary-box-left {
     margin-right: 5rem;
     display: flex;
