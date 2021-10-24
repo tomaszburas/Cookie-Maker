@@ -1,8 +1,9 @@
+import {basketIcon} from "./app.js";
+
 (function () {
-    const basketIcons = document.querySelector('.bx-basket');
     const orderBox = document.querySelector('.order-box')
 
-    basketIcons.style.display = 'none';
+    basketIcon.style.display = 'none';
 
     const div = document.createElement('div');
     div.classList.add('go-home');

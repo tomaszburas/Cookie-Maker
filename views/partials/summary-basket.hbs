@@ -54,11 +54,21 @@
             <th></th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="summary-box">
             <tr>
                 <td class="fixed-width-column">🍪 Total price</td>
-                <td>{{summaryPrice cookieData bases glazes addons}} $</td>
+                <td class="total-price">{{summaryPrice cookieData bases glazes addons}} $</td>
             </tr>
+        {{#if valueCoupon}}
+            <tr class="coupon-active">
+                <td class="fixed-width-column">🎁 Discount</td>
+                <td>- {{valueCoupon}}%</td>
+            </tr>
+            <tr class="coupon-active">
+                <td class="fixed-width-column">🎉 New price</td>
+                <td>{{couponSummaryPrice (summaryPrice cookieData bases glazes addons) valueCoupon}} $</td>
+            </tr>
+        {{/if}}
         </tbody>
     </table>
 </div>

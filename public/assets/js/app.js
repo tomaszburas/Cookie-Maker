@@ -1,4 +1,4 @@
-(async function () {
+
     const addBaseElements = document.querySelectorAll('.base-add');
     const addGlazeElements = document.querySelectorAll('.glaze-add');
     const removeGlazeElements = document.querySelectorAll('.glaze-remove')
@@ -12,8 +12,10 @@
 
     const basketIcon = document.querySelector('.bx-basket');
 
+    (async function () {
     let cookie = {};
     let savedCookie;
+
 
     async function init() {
         const res = await fetch('/get-cookie');
@@ -203,7 +205,7 @@
             cookiePreview(cookie);
             removeAddons(e.target.dataset.name);
         } else {
-            alertMessage('📣 You have already added 2 addons')
+            alertMessage('📣 You have already added 2 addons', 'negative');
         }
 
         [...addAddonsElements].forEach(ele => {
@@ -290,12 +292,23 @@
         }
     }
 
-    function alertMessage(string) {
+        await init();
+
+    })();
+
+    function alertMessage(string, importance) {
         const div = document.createElement('div');
         div.classList.add('alert');
 
         const p = document.createElement('p');
-        p.classList.add('alert-text', 'animate__animated', 'animate__fadeInDown')
+
+        if (importance === 'negative') {
+            p.classList.add('alert-text-negative', 'animate__animated', 'animate__fadeInDown')
+        }
+        if (importance === 'positive') {
+            p.classList.add('alert-text-positive', 'animate__animated', 'animate__fadeInDown')
+        }
+
         p.innerText = string;
 
         div.appendChild(p);
@@ -308,10 +321,11 @@
         setTimeout(() => {
             body.removeChild(div);
         }, 3000)
-    }
+    };
 
-    await init();
+   export {basketIcon, alertMessage};
 
-})();
+
+
 
 

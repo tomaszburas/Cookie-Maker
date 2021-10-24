@@ -21,6 +21,9 @@ const handlebarsHelpers = {
 
         return sum;
     },
+    couponSummaryPrice: (totalPrice, couponValue) => {
+        return totalPrice - (totalPrice * (couponValue/100));
+    }
 }
 
 module.exports = {

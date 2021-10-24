@@ -17,8 +17,14 @@ const COOKIE_ADDONS = {
     strawberries: 2,
 }
 
+const COUPON_CODE = {
+    megak: 10,
+    promo50: 50,
+}
+
 module.exports = {
     COOKIE_BASES,
     COOKIE_GLAZE,
-    COOKIE_ADDONS
+    COOKIE_ADDONS,
+    COUPON_CODE,
 }

@@ -76,7 +76,6 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-top: auto;
-
 }
 
 .navigation-section {
@@ -135,7 +134,6 @@ body {
     width: 250px;
     height: 250px;
     background-size: cover;
-    /*margin-right: 5rem;*/
     background-position: center;
 }
 
@@ -242,24 +240,6 @@ a:active {
     cursor: not-allowed;
 }
 
-/*.remove-icon-link {*/
-/*    color: lightgray;*/
-/*    font-size: 1.5rem;*/
-/*    cursor: not-allowed;*/
-/*}*/
-
-/*.add-icon-link {*/
-/*    color: var(--secondary-color);*/
-/*    font-size: 1.5rem;*/
-/*    cursor: pointer;*/
-/*}*/
-
-/*PULSE */
-
-/*.block.pulse {*/
-/*    background: #222227;*/
-/*}*/
-
 .pulse1-badge {
     position: absolute;
     width: .6rem;
@@ -321,9 +301,15 @@ a:active {
     width: 100%;
 }
 
-.alert-text {
+.alert-text-negative {
     padding: 1rem;
     background-color: var(--avatar-bg);
+    border-radius: .6rem;
+}
+
+.alert-text-positive {
+    padding: 1rem;
+    background-color: #b9fbc0;
     border-radius: .6rem;
 }
 
@@ -393,4 +379,41 @@ a:active {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.coupon-box {
+    margin-top:2rem;
+}
+
+.form-control {
+    border-radius: 0.5rem;
+    border:0;
+    font-size: 1rem;
+    padding: 0.5rem;
+}
+
+.class-button {
+    color: var(--primary-color);
+    background: var(--avatar-bg);
+    cursor:pointer;
+}
+
+.class-input {
+    text-indent: 1rem;
+    color: var(--primary-color);
+    border: 2px solid var(--avatar-bg);
+}
+
+.class-input:focus {
+    outline: none;
+}
+
+@media screen and (max-width: 850px) {
+    .center-container {
+        flex-direction: column-reverse;
+    }
+
+    .cookie-preview {
+
+    }
 }

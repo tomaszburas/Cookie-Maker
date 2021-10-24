@@ -3,6 +3,9 @@
         <div class="summary-box-left">
             <h1 class="big-txt">Summary</h1>
             {{> summary-basket}}
+            <div class="coupon-box">
+                {{> coupon}}
+            </div>
             <div class="basket-navigation-box">
                 {{> go-home}}
                 {{> go-order}}
@@ -21,3 +24,5 @@
 
     {{/if}}
 </div>
+
+<script type="module" src="/assets/js/basket.js"></script>
