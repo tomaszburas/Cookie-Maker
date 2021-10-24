@@ -6,7 +6,6 @@
     --font: #3d3d4e;
     --avatar-bg: #f8adbe;
     --basket: #eb002b;
-
     --primary-color: #77223c;
     --secondary-color: #ef6a20;
 }
@@ -59,9 +58,9 @@ body {
 
 .basket {
     background: transparent;
-    box-shadow: 0px 0px 0px transparent;
-    border: 0px solid transparent;
-    text-shadow: 0px 0px 0px transparent;
+    box-shadow: 0 0 0 transparent;
+    border: 0 solid transparent;
+    text-shadow: 0 0 0 transparent;
     margin-right: 2rem;
     color: var(--font);
 }
@@ -160,7 +159,7 @@ body {
     margin-left: 5rem;
 }
 
-/*NOWE*/
+/*--TABLE--*/
 
 .fixed-width-card {
     padding: 1rem;
@@ -203,6 +202,8 @@ body {
     display: flex;
     align-items: center;
 }
+
+/*-- END TABLE --*/
 
 a {
     text-decoration: none;
@@ -321,7 +322,7 @@ a:active {
     margin-bottom: 2rem;
 }
 
-/*button*/
+/*-- BUTTON --*/
 
 .center-button {
     display: flex;
