@@ -12,7 +12,7 @@ Cookie configuration app.
 * Discount coupon module, example: 'promo50',
 * Data storage in a cookie.
 
-LIVE: [still-falls-51659.herokuapp.com](https://still-falls-51659.herokuapp.com/ "Tasker.")
+LIVE: [guarded-island-34386.herokuapp.com](https://guarded-island-34386.herokuapp.com/ "Cookie Maker")
 
 ![Cookie Maker](https://i.imgur.com/AwRSDBL.jpg)
 
