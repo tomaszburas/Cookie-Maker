@@ -1,9 +1,12 @@
 <div class="center-container">
+    <div class="left-box">
+    <h1 class="main-text-display">Cookie preview 🍪</h1>
     {{#if cookieData}}
             {{>cookie-preview}}
         {{else}}
             {{> base-cookie-preview}}
     {{/if}}
+    </div>
     <div class="right-box">
         {{>configurator}}
     </div>
