@@ -15,7 +15,7 @@ body {
     color: var(--font);
     font-size: .8rem;
     width: 100%;
-    height: 100vh;
+    height: 100vmax;
     margin:0;
     display:flex;
     flex-direction:column;
