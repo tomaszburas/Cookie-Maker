@@ -8,7 +8,7 @@
     const pulseBadge = document.querySelector('.pulse1-badge');
     const baseCookiePreviewDiv = document.querySelector('.base-cookie-preview');
     const cookiePreviewDiv = document.querySelector('.cookie-preview');
-    const body = document.querySelector('body');
+    const body = document.querySelector('.header-section');
 
     const basketIcon = document.querySelector('.bx-basket');
 
