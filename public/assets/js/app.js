@@ -181,6 +181,8 @@ const basketIcon = document.querySelector('.bx-basket');
     addElement.style.color = 'lightgrey';
 
     cookie.glaze = '';
+
+    cookiePreview(cookie);
   }
 
   function addAddons() {
@@ -264,6 +266,8 @@ const basketIcon = document.querySelector('.bx-basket');
     const { base, glaze, addons } = obj;
     const bg = [];
 
+    checkIngredients();
+
     if (glaze) {
       bg.push(`url('/assets/images/cookies/${glaze}.png')`);
     }
@@ -284,6 +288,20 @@ const basketIcon = document.querySelector('.bx-basket');
       baseCookiePreviewDiv.style.border = 'none';
     } else {
       cookiePreviewDiv.style.backgroundImage = bg.join(',');
+    }
+  }
+
+  function checkIngredients() {
+    if (!cookie.glaze) {
+      [...addGlazeElements].forEach((e) => {
+        e.style.color = 'var(--secondary-color)';
+      });
+    }
+
+    if (!cookie.addons.length) {
+      [...addAddonsElements].forEach((e) => {
+        e.style.color = 'var(--secondary-color)';
+      });
     }
   }
 
