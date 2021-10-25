@@ -266,8 +266,6 @@ const basketIcon = document.querySelector('.bx-basket');
     const { base, glaze, addons } = obj;
     const bg = [];
 
-    checkIngredients();
-
     if (glaze) {
       bg.push(`url('/assets/images/cookies/${glaze}.png')`);
     }
@@ -291,19 +289,19 @@ const basketIcon = document.querySelector('.bx-basket');
     }
   }
 
-  function checkIngredients() {
-    if (!cookie.glaze) {
-      [...addGlazeElements].forEach((e) => {
-        e.style.color = 'var(--secondary-color)';
-      });
-    }
-
-    if (!cookie.addons.length) {
-      [...addAddonsElements].forEach((e) => {
-        e.style.color = 'var(--secondary-color)';
-      });
-    }
-  }
+  // function checkIngredients() {
+  //   if (!cookie.glaze) {
+  //     [...addGlazeElements].forEach((e) => {
+  //       e.style.color = 'var(--secondary-color)';
+  //     });
+  //   }
+  //
+  //   if (!cookie.addons.length) {
+  //     [...addAddonsElements].forEach((e) => {
+  //       e.style.color = 'var(--secondary-color)';
+  //     });
+  //   }
+  // }
 
   await init();
 
