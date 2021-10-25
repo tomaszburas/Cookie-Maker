@@ -8,6 +8,8 @@
     --basket: #eb002b;
     --primary-color: #77223c;
     --secondary-color: #ef6a20;
+
+    --vh: 0;
 }
 
 body {
@@ -445,6 +447,9 @@ a:active {
 }
 
 @media screen and (max-width: 850px) {
+    body {
+        height: calc(var(--vh, 1vh) * 100);
+    }
 
     .header-section {
         padding: .5rem 1.5rem;
@@ -484,6 +489,10 @@ a:active {
 
     .summary-center-container {
         flex-direction: column-reverse;
+        margin: 1rem 0;
+    }
+
+    .order-center-container {
         margin: 1rem 0;
     }
 
