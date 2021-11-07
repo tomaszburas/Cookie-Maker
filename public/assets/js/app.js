@@ -289,20 +289,6 @@ const basketIcon = document.querySelector('.bx-basket');
     }
   }
 
-  // function checkIngredients() {
-  //   if (!cookie.glaze) {
-  //     [...addGlazeElements].forEach((e) => {
-  //       e.style.color = 'var(--secondary-color)';
-  //     });
-  //   }
-  //
-  //   if (!cookie.addons.length) {
-  //     [...addAddonsElements].forEach((e) => {
-  //       e.style.color = 'var(--secondary-color)';
-  //     });
-  //   }
-  // }
-
   await init();
 
   const vh = window.innerHeight * 0.01;
